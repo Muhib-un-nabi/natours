@@ -6,15 +6,25 @@ const {
   getAllTours,
   getTour,
   updateTour,
-  checkID,
-  middleware,
+  aliasTopTours
+  // checkID,
+  // middleware
 } = require('../controllers/tourCantroler');
 
 const router = express.Router();
 
-router.param('id', checkID);
+// router.param('id', checkID);
 
-router.route('/').get(getAllTours).post(middleware, createTour);
-router.route('/:id').get(getTour).patch(updateTour).delete(deleteTour);
+router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
+
+router
+  .route('/')
+  .get(getAllTours)
+  .post(createTour);
+router
+  .route('/:id')
+  .get(getTour)
+  .patch(updateTour)
+  .delete(deleteTour);
 
 module.exports = router;
