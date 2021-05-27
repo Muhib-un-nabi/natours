@@ -1,6 +1,8 @@
 const express = require('express');
 const morgan = require('morgan');
 
+const AppError = require('./utils/appError');
+const globalErrorHandler = require('./controllers/errorController');
 const tourRouter = require('./routes/tourRouter');
 const userRoute = require('./routes/userRoute');
 
@@ -28,15 +30,11 @@ app.use((req, res, next) => {
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRoute);
 
-app.get('/', (req, res) => {
-  res
-    .status(404)
-    .json({ massage: 'Hello from the server side!', app: 'Natures' });
+app.all('*', (req, res, next) => {
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });
 
-app.post('/', (req, res) => {
-  res.send('you Can Post to this endPoint...');
-});
+app.use(globalErrorHandler);
 
 // 4) Start Server
 module.exports = app;
