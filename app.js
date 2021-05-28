@@ -35,6 +35,5 @@ app.all('*', (req, res, next) => {
 });
 
 app.use(globalErrorHandler);
-
 // 4) Start Server
 module.exports = app;
