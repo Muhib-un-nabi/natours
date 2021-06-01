@@ -119,7 +119,9 @@ const tourSchema = new mongoose.Schema(
 tourSchema.virtual('durationWeeks').get(function() {
   return this.duration / 7;
 });
-
+tourSchema.virtual('reviews').get(function() {
+  return this.duration / 7;
+});
 //  DOCUMENT MIDDEWARE:  Run Before .save() and .create()
 tourSchema.pre('save', function(next) {
   this.slug = slugify(this.name, { lower: true });
