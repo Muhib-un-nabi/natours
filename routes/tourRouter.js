@@ -20,12 +20,10 @@ router.use('/:tourId/reviews', reviewRouter);
 router.route('/top-5-cheap').get(aliasTopTours, getAllTours);
 router.route('/tour-stats').get(getTourStats);
 router
-  .route(
-    protect,
-    restrictTo('admin', 'lead-guide', 'guide'),
-    '/monthly-plan/:year'
-  )
-  .get(getMonthlyPlan);
+  .route('/monthly-plan/:year')
+  .get(protect, restrictTo('admin', 'lead-guide', 'guide'), getMonthlyPlan);
+
+router.route('/tours-within/:distance/center/:latlng/unit/:unit').get();
 
 router
   .route('/')
